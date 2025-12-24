@@ -55,9 +55,9 @@ class Database {
     static init() {
         if (!localStorage.getItem("users")) {
             const users = [
-                new User("admin", "123"),
-                new User("user1", "111"),
-                new User("user2", "222")
+                new User("user", "123"),
+                new User("admin", "admin"),
+                new User("guest", "guest")
             ];
             localStorage.setItem("users", JSON.stringify(users));
         }
@@ -83,7 +83,7 @@ function login() {
         document.getElementById("userBox").style.display = "block";
         document.getElementById("welcome").innerText = `Hi ${found.username}`;
     } else {
-        alert("Gagal Login!");
+        alert("Gagal Login ❌");
     }
 }
 
