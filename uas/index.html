@@ -1,48 +1,140 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>PBO Login LocalStorage</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f2f2f2;
-            padding: 50px;
-        }
-        .box {
-            background: white;
-            padding: 20px;
-            width: 300px;
-            margin: auto;
-            border-radius: 8px;
-            text-align: center;
-        }
-        input, button {
-            width: 90%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-        button {
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>PBO Login LocalStorage</title>
+
+<style>
+/* ===== RESET ===== */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ===== BACKGROUND ANIMATION ===== */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(270deg, #667eea, #764ba2, #6b8dd6);
+    background-size: 600% 600%;
+    animation: gradientBG 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== FLOATING CIRCLES ===== */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    animation: float 10s infinite ease-in-out;
+}
+
+.circle:nth-child(1) {
+    width: 120px;
+    height: 120px;
+    left: 10%;
+    top: 20%;
+}
+
+.circle:nth-child(2) {
+    width: 80px;
+    height: 80px;
+    right: 15%;
+    bottom: 25%;
+    animation-duration: 12s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+    100% { transform: translateY(0); }
+}
+
+/* ===== BOX ===== */
+.box {
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    width: 320px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    animation: fadeSlide 0.8s ease;
+}
+
+/* Box animation */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== INPUT & BUTTON ===== */
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #5563c1;
+    transform: scale(1.03);
+}
+
+/* ===== TEXT ===== */
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+</style>
 </head>
+
 <body>
 
+<!-- DECORATION -->
+<div class="circle"></div>
+<div class="circle"></div>
+
+<!-- LOGIN BOX -->
 <div class="box" id="loginBox">
-    <h2>Login</h2>
+    <h2>🔐 Login</h2>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button onclick="login()">Login</button>
 </div>
 
+<!-- USER BOX -->
 <div class="box" id="userBox" style="display:none;">
     <h2 id="welcome"></h2>
     <button onclick="logout()">Logout</button>
 </div>
 
 <script>
-// ===== CLASS USER (PBO) =====
+// ===== CLASS USER =====
 class User {
     constructor(username, password) {
         this.username = username;
@@ -50,7 +142,7 @@ class User {
     }
 }
 
-// ===== DATABASE LOCALSTORAGE =====
+// ===== DATABASE =====
 class Database {
     static init() {
         if (!localStorage.getItem("users")) {
@@ -68,7 +160,7 @@ class Database {
     }
 }
 
-// ===== LOGIN SYSTEM =====
+// ===== LOGIN =====
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -81,9 +173,9 @@ function login() {
     if (found) {
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("userBox").style.display = "block";
-        document.getElementById("welcome").innerText = `Hi ${found.username}`;
+        document.getElementById("welcome").innerText = `👋 Hi ${found.username}`;
     } else {
-        alert("Maaf anda gagal login mungkin pasword atau user yang ada masukan salah❌");
+        alert("❌ Username atau password salah!");
     }
 }
 
@@ -91,7 +183,7 @@ function logout() {
     location.reload();
 }
 
-// INIT DATABASE
+// INIT
 Database.init();
 </script>
 
