@@ -2,135 +2,164 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>PBO Login LocalStorage</title>
+<title>Modern Login PBO</title>
 
 <style>
 /* ===== RESET ===== */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* ===== BACKGROUND ANIMATION ===== */
+/* ===== BACKGROUND ===== */
 body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(270deg, #667eea, #764ba2, #6b8dd6);
-    background-size: 600% 600%;
-    animation: gradientBG 12s ease infinite;
+    height: 100vh;
+    background: radial-gradient(circle at top, #1b2735, #090a0f);
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 }
 
-/* Background animation */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* ===== FLOATING CIRCLES ===== */
-.circle {
+/* ===== PARTICLES ===== */
+.particles span {
     position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.8);
     border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    animation: float 10s infinite ease-in-out;
+    animation: move 20s linear infinite;
 }
 
-.circle:nth-child(1) {
-    width: 120px;
-    height: 120px;
-    left: 10%;
-    top: 20%;
+@keyframes move {
+    from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 1;
+    }
 }
 
-.circle:nth-child(2) {
-    width: 80px;
-    height: 80px;
-    right: 15%;
-    bottom: 25%;
-    animation-duration: 12s;
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-30px); }
-    100% { transform: translateY(0); }
-}
-
-/* ===== BOX ===== */
+/* ===== GLASS BOX ===== */
 .box {
-    background: rgba(255,255,255,0.95);
-    padding: 25px;
-    width: 320px;
-    border-radius: 15px;
+    width: 340px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    box-shadow:
+        0 0 25px rgba(0, 255, 255, 0.15),
+        inset 0 0 20px rgba(255,255,255,0.05);
     text-align: center;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    animation: fadeSlide 0.8s ease;
+    color: white;
+    animation: appear 1s ease;
 }
 
-/* Box animation */
-@keyframes fadeSlide {
+@keyframes appear {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: scale(0.9) translateY(40px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1) translateY(0);
     }
 }
 
-/* ===== INPUT & BUTTON ===== */
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
-button {
-    background: #667eea;
-    color: white;
+/* ===== INPUT ===== */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
     border: none;
+    outline: none;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+/* ===== BUTTON ===== */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #000;
+    font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    top: 0;
+    left: -100%;
+    transition: 0.4s;
+}
+
+button:hover::after {
+    left: 0;
 }
 
 button:hover {
-    background: #5563c1;
-    transform: scale(1.03);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
 }
 
-/* ===== TEXT ===== */
-h2 {
-    margin-bottom: 15px;
-    color: #333;
+/* ===== HIDE ===== */
+.hidden {
+    display: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- DECORATION -->
-<div class="circle"></div>
-<div class="circle"></div>
-
-<!-- LOGIN BOX -->
-<div class="box" id="loginBox">
-    <h2>🔐 Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+<!-- PARTICLES -->
+<div class="particles">
+    <span style="left:10%; animation-delay:0s;"></span>
+    <span style="left:20%; animation-delay:2s;"></span>
+    <span style="left:35%; animation-delay:4s;"></span>
+    <span style="left:50%; animation-delay:1s;"></span>
+    <span style="left:65%; animation-delay:3s;"></span>
+    <span style="left:80%; animation-delay:5s;"></span>
 </div>
 
-<!-- USER BOX -->
-<div class="box" id="userBox" style="display:none;">
+<!-- LOGIN -->
+<div class="box" id="loginBox">
+    <h2>🚀 Secure Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">LOGIN</button>
+</div>
+
+<!-- USER -->
+<div class="box hidden" id="userBox">
     <h2 id="welcome"></h2>
-    <button onclick="logout()">Logout</button>
+    <button onclick="logout()">LOGOUT</button>
 </div>
 
 <script>
@@ -145,14 +174,11 @@ class User {
 // ===== DATABASE =====
 class Database {
     static init() {
-        if (!localStorage.getItem("users")) {
-            const users = [
-                new User("user", "123"),
-                new User("admin", "admin"),
-                new User("guest", "guest")
-            ];
-            localStorage.setItem("users", JSON.stringify(users));
-        }
+        localStorage.setItem("users", JSON.stringify([
+            new User("user", "123"),
+            new User("admin", "admin"),
+            new User("guest", "guest")
+        ]));
     }
 
     static getUsers() {
@@ -165,17 +191,16 @@ function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const users = Database.getUsers();
-    const found = users.find(
+    const found = Database.getUsers().find(
         u => u.username === username && u.password === password
     );
 
     if (found) {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("userBox").style.display = "block";
-        document.getElementById("welcome").innerText = `👋 Hi ${found.username}`;
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("userBox").classList.remove("hidden");
+        document.getElementById("welcome").innerText = `👋 Welcome, ${found.username}`;
     } else {
-        alert("❌ Username atau password salah!");
+        alert("❌ Login gagal");
     }
 }
 
@@ -183,7 +208,6 @@ function logout() {
     location.reload();
 }
 
-// INIT
 Database.init();
 </script>
 
